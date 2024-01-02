@@ -1,3 +1,4 @@
+import time
 import tkinter as tk
 from tkinter import ttk, messagebox
 from graph_utils import DynamicGraph
@@ -26,6 +27,7 @@ class GraphEditor:
        
         # Canvas à droite ou on va dessiner notre notre graphe
         self.fill_right_frame()
+
 
         
         
@@ -133,10 +135,11 @@ class GraphEditor:
         ttk.Button(self.left_frame, text="Ajouter l'arête", command=self.create_edge).grid(row=2, column=0, columnspan=2, pady=10)
 
         # On ajoute les boutons pour de coloriage du graphe et de reinitialisation de 
-        ttk.Button(self.left_frame, text="Colorer le graphe", command=self.color_graph).grid(row=3, column=0, pady=5)
+        ttk.Button(self.left_frame, text="Colorier le graphe", command=self.color_graph).grid(row=3, column=0, pady=5)
         # On ajoute les boutons de reinitialisation de l'application
         ttk.Button(self.left_frame, text="Réinitialiser", command=self.reset_application).grid(row=3, column=1, pady=5)
 
+        ttk.Button(self.left_frame, text="Aidez moi", command=self.show_help).grid(row=4, column=0, columnspan=2, pady=10)
         # on appelle la fonction de mis a jour de la liste des combo box (liste deroulant)
         self.update_combobox()
         
@@ -164,7 +167,43 @@ class GraphEditor:
             # ajoute de la couleur du sommet
             self.canvas.create_text(x-10, y-10, text=f"couleur : {self.dynamic_graph.colors[vertex_num]}", fill="red")
             
+    def show_help(self):
+        # Création de la fenêtre flottante
+        floating_window = tk.Toplevel(self.master)
+        floating_window.title("Aidez moi")
+        floating_window.geometry("700x300")
 
+        # Ajout de la zone de texte non éditable à la fenêtre flottante
+        canvas = tk.Canvas(floating_window, bg="white", width=600, height=300)
+        canvas.pack(padx=10, pady=10)
+
+        # Ajout du texte au canevas
+        messages = [
+            "",
+            "Pour ajouter un sommet, cliquez sur le rectangle blanc à votre droite",
+            "Pour ajouter des arêtes, sélectionnez deux sommets avec les listes déroulantes",
+            "Puis cliquez sur 'Ajouter l'arête'",
+            "Pour colorier votre graphe, cliquez sur 'Colorier le graphe'",
+            "Cliquez sur 'Réinitialiser' pour redémarrer l'application"
+        ]
+
+        y_position = 20
+        for message in messages:
+            canvas.create_text(300, y_position, text=message, fill="black", anchor="center")
+            y_position += 30
+
+
+       
+
+        # Ajout d'un bouton pour fermer la fenêtre flottante
+        ttk.Button(floating_window, text="Fermer", command=floating_window.destroy).pack(pady=10)
+
+
+        # messagebox.showinfo("Aidez moi", 
+        #                     "Pour ajouter un sommet cliquez sur le rectangle blanc à votre droite\n"
+        #                     "Pour ajouter des arêtes selectionnez deux sommets avec les listes déroulantes puis cliquez sur ''ajouter l'arête'\n"
+        #                     "Pour colorier votre graphe cliquez sur 'Colorier le graphe'\n"
+        #                     "Cliquez sur 'Réinitialiser' pour redemarer l'application\n")
 
 
 def main():

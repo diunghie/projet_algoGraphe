@@ -165,7 +165,9 @@ class GraphEditor:
             # recuperation des coordonées du sommet
             x, y, _, vertex_num = self.vertices[vertex]
             # ajoute de la couleur du sommet
-            self.canvas.create_text(x-10, y-10, text=f"couleur : {self.dynamic_graph.colors[vertex_num]}", fill="red")
+            self.canvas.create_text(x-10, y-15, text=f"couleur : {self.dynamic_graph.colors[vertex_num]}", fill="red")
+        
+        self.canvas.create_text(200, 10, text=f"Nombre chromatique : {self.dynamic_graph.chromatic_number()}", fill="blue")
             
     def show_help(self):
         # Création de la fenêtre flottante
